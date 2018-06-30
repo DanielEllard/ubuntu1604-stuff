@@ -12,5 +12,8 @@ h1, h2, h3 {
     font-family: Arial, Helvetica, sans-serif;
     color: firebrick
 }
+li {
+    padding: 0.5em;
+}
 </style>
 </html>
