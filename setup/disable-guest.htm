@@ -1,0 +1,40 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Disable the Guest Account</title>
+</head>
+<body>
+
+<h1>Disable the Guest Account from the Desktop</h1>
+
+<p> For most of my machines, there's no need for a guest account,
+and having a guest account makes me (and auditors) nervous.  
+</p>
+
+<p> Edit (as sudo)
+<kbd>/etc/lightdm/lightdm.conf.d/50-no-guest.conf</kbd>
+so that it contains:
+
+<pre>
+[Seat:*]
+    allow-guest=false
+</pre>
+
+<p>
+Note: prior to 15.10, Ubuntu used <kbd>[SeatDefaults]</kbd> instead
+of <kbd>[Seat:*]</kbd>.  Either seems to work equally well for 16.04,
+but the older format will probably stop working in some future release.
+</p>
+
+<p>
+The change will take effect the next time the login screen is
+activated.
+</p>
+
+<p> To reenable the guest account, remove 
+<kbd>/etc/lightdm/lightdm.conf.d/50-no-guest.conf</kbd> (or replace
+it with an empty file, or comment out the changes).
+</p>
+
+</body>
+</html>

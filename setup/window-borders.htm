@@ -1,0 +1,49 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Window Borders</title>
+</head>
+<body>
+
+<h1>Window Borders</h1>
+
+<p> The default desktop theme does not put borders on windows (except
+for the title bar).  This can be annoying if you spend a lot of
+time with Terminal instances tiling your screen (or using some other
+application that uses a black background and didn't create any other
+sort of window border, because it's hard to tell where one window
+ends and the next begins.  If you prefer to resize your windows by
+grabbing a corner and stretching/shrinking it, you're also out of
+luck.  </p>
+
+<p> Fortunately, fixing this is straightforward, at least for the
+default theme. </p>
+
+<p> Edit (as sudo)
+<kbd>/usr/share/themes/Ambiance/gtk-3.0/apps/unity.css</kbd>
+(or the corresponding file, if you are using a different
+theme than Ambiance), and change the line, very near the top,
+that looks like: </p>
+
+<pre>
+	-UnityDecoration-extents: 28px 0 0 0;
+</pre>
+
+<p> to: </p>
+
+<pre>
+	-UnityDecoration-extents: 28px 4 4 4;
+</pre>
+
+<p>
+If the resulting borders are too wide or too thin, change each 4 to
+whatever value you prefer.
+</p>
+
+<p>
+The change will take effect the next time the theme is restarted
+(i.e. by logging out and logging in again).
+</p>
+
+</body>
+</html>
