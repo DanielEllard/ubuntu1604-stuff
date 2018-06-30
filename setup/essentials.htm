@@ -26,22 +26,26 @@ sudo apt upgrade
 sudo apt autoremove
 
 # install the basic tool-chain
-sudo apt install build-essential
+sudo apt install -yf build-essential
 
 # install ntp, with a basic configuration
 # (you might want to modify it later)
-sudo apt install ntp
+sudo apt install -yf ntp
 
 # If you plan to do any network diagnostics:
-sudo apt install tcpdump traceroute
+sudo apt install -yf tcpdump traceroute
 
 # Tools I like, but you might not care about
-sudo apt install vim vile git
-sudo apt install pep8 python-dev pylint
-sudo apt install python3-dev pylint3
+sudo apt install -yf vim vile git
+sudo apt install -yf pep8 python-dev pylint
+sudo apt install -yf python3-dev pylint3
 
 # gitk is nice, but drags in a lot of other stuff
-sudo apt install gitk
+sudo apt install -yf gitk
+
+# if you ever want to ssh/scp/sftp TO this machine:
+sudo apt install -yf openssh-server
+
 </pre>
 
 </body>
