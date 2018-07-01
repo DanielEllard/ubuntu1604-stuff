@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+# Copyright 2018 Daniel Ellard
+#
+# Apache 2.0 License
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Create a basic TRAC environment, for the first TRAC
+# project on this system.
+#
+# This script also creates a TRAC user named "admin",
+# and requires setting a password for this user.
+# (you should always have at least one valid user,
+# although you can remove this user and replace it
+# with another, if you prefer.
+
+if [ $# -ne 2 ]; then
+    echo "Error: usage: $0 TracDataDirectory ProjectName"
+    exit 1
+fi
+
+TRACDATADIR="${1}"
+TRACPROJECT="${2}"
+
+PROJDIR="${TRACDATADIR}/${TRACPROJECT}"
+
+# check whether TRAC is installed in the expected place
+#
+# Note: could also check that TRAC is the expected version,
+# but we don't
+#
+if [ ! -x /usr/local/bin/tracd ]; then
+    echo "ERROR: TRAC did not install"
+    exit 1
+fi
+
+if [ -d "${PROJDIR}" ]; then
+    echo "ERROR: project directory $PROJDIR already exists"
+    exit 1
+fi
+
+mkdir -p "${PROJDIR}"
+
+# Feed "trac-admin initenv" the name of the project followed
+# by a blank line (so that the default database type, sqlite,
+# is selected)
+#
+echo "${TRACPROJECT}\n" | trac-admin "${PROJDIR}" initenv
+
+# Replace the logo's alt text with the name of the project
+#
+# Note: this depends on the format of a string that is meant
+# as a comment, and is therefore fragile and might not work
+# for all versions of TRAC.
+#
+sed -e "s/^alt =.*$/alt = $TRACPROJECT/" -i "${PROJDIR}"/conf/trac.ini
+
+echo "CREATING PASSWORD FOR admin ACCOUNT"
+htdigest -c "${PROJDIR}"/.htdigest Restricted admin
+
+configure_systemd() {
+
+    # Just in case...
+    sudo systemctl stop trac
+
+    cat << . | sudo tee /etc/systemd/system/trac.service
+[Unit]
+Description = TrackD Daemon
+After = network.target
+
+[Service]
+ExecStart = /usr/local/bin/tracd \
+	-p "$TRACPORT" --protocol=http \
+	--auth="${TRACPROJECT},${PROJDIR}/.htdigest,Restricted" \
+	-s "${PROJDIR}"
+Type = simple
+User = ${USER}
+Group = $(id -g)
+
+[Install]
+WantedBy = multi-user.target
+.
+}
+
+# install_trac
+initialize_trac
+configure_systemd
+
+sudo systemctl restart trac
