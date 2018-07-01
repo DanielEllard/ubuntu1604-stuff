@@ -4,8 +4,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-p, body {
+body {
     font-family: Arial, Helvetica, sans-serif;
+    max-width: 50em;
 }
 
 h1, h2, h3 {
@@ -13,7 +14,7 @@ h1, h2, h3 {
     color: firebrick
 }
 li {
-    padding: 0.5em;
+    padding: 0.3em;
 }
 
 code {
@@ -21,6 +22,7 @@ code {
     display: block;
     font-family: monospace;
     margin: 1em 0;
+    max-width: 85em;
     white-space: pre;
 }
 
@@ -29,6 +31,7 @@ output {
     display: block;
     font-family: monospace;
     margin: 1em 0;
+    max-width: 85em;
     white-space: pre;
 }
 
