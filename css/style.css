@@ -15,5 +15,22 @@ h1, h2, h3 {
 li {
     padding: 0.5em;
 }
+
+code {
+    background-color: lightblue;
+    display: block;
+    font-family: monospace;
+    margin: 1em 0;
+    white-space: pre;
+}
+
+output {
+    background-color: navajowhite;
+    display: block;
+    font-family: monospace;
+    margin: 1em 0;
+    white-space: pre;
+}
+
 </style>
 </html>
