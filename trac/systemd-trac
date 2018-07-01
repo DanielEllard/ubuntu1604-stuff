@@ -13,8 +13,8 @@
 # project on this system.
 #
 
-if [ $# -ne 2 ]; then
-    echo "Error: usage: $0 TracDataDirectory ProjectName"
+if [ $# -ne 3 ]; then
+    echo "Error: usage: $0 TracDataDirectory ProjectName Port"
     exit 1
 fi
 
