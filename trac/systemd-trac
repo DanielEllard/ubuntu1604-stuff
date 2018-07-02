@@ -51,7 +51,7 @@ After = network.target
 
 [Service]
 ExecStart = /usr/local/bin/tracd \
-	-p "$TRACPORT" --protocol=http \
+	-p "$TRACPORT" --protocol=http11 \
 	--auth="${TRACPROJECT},${PROJDIR}/.htdigest,Restricted" \
 	-s "${PROJDIR}"
 Type = simple
