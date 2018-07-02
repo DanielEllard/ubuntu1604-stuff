@@ -12,15 +12,19 @@
 # Create a basic systemd service for Trac, for the first Trac
 # project on this system.
 #
+# The remote port is the one that users will connect to;
+# the local port is used if we're tunneling through stunnel
+# (or something similar).
 
-if [ $# -ne 3 ]; then
-    echo "Error: usage: $0 TracDataDirectory ProjectName Port"
+if [ $# -ne 4 ]; then
+    echo "Error: usage: $0 TracDataDirectory ProjectName RemotePort LocalPort"
     exit 1
 fi
 
 TRACDATADIR="${1}"
 TRACPROJECT="${2}"
 TRACPORT="${3}"
+LOCALPORT="${4}"
 
 PROJDIR="${TRACDATADIR}/${TRACPROJECT}"
 
@@ -44,6 +48,12 @@ if [ -f "/etc/systemd/system/trac.service" ]; then
     exit 1
 fi
 
+if [ "${LOCALPORT}" -eq "${TRACPORT}" ]; then
+    LISTENHOST="0.0.0.0"
+else
+    LISTENHOST="localhost"
+fi
+
 cat << . | sudo tee /etc/systemd/system/trac.service
 [Unit]
 Description = TrackD Daemon
@@ -51,7 +61,7 @@ After = network.target
 
 [Service]
 ExecStart = /usr/local/bin/tracd \
-	-p "$TRACPORT" --protocol=http11 \
+	--hostname="$LISTENHOST" -p "$LOCALPORT" --protocol=http11 \
 	--auth="${TRACPROJECT},${PROJDIR}/.htdigest,Restricted" \
 	-s "${PROJDIR}"
 Type = simple
