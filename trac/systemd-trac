@@ -40,7 +40,7 @@ if [ ! -d "${PROJDIR}" ]; then
 fi
 
 if [ -f "/etc/systemd/system/trac.service" ]; then
-    echo "ERROR: trac service already configured
+    echo "ERROR: trac service already configured"
     exit 1
 fi
 
@@ -61,6 +61,5 @@ Group = $(id -g)
 [Install]
 WantedBy = multi-user.target
 .
-}
 
 sudo systemctl restart trac

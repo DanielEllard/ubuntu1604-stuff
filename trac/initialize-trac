@@ -62,32 +62,3 @@ sed -e "s/^alt =.*$/alt = $TRACPROJECT/" -i "${PROJDIR}"/conf/trac.ini
 echo "CREATING PASSWORD FOR admin ACCOUNT"
 htdigest -c "${PROJDIR}"/.htdigest Restricted admin
 
-configure_systemd() {
-
-    # Just in case...
-    sudo systemctl stop trac
-
-    cat << . | sudo tee /etc/systemd/system/trac.service
-[Unit]
-Description = TrackD Daemon
-After = network.target
-
-[Service]
-ExecStart = /usr/local/bin/tracd \
-	-p "$TRACPORT" --protocol=http \
-	--auth="${TRACPROJECT},${PROJDIR}/.htdigest,Restricted" \
-	-s "${PROJDIR}"
-Type = simple
-User = ${USER}
-Group = $(id -g)
-
-[Install]
-WantedBy = multi-user.target
-.
-}
-
-# install_trac
-initialize_trac
-configure_systemd
-
-sudo systemctl restart trac
