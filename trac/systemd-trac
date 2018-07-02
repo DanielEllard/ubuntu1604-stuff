@@ -62,4 +62,5 @@ Group = $(id -g)
 WantedBy = multi-user.target
 .
 
+sudo systemctl enable trac
 sudo systemctl restart trac
