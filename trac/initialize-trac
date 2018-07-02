@@ -9,10 +9,10 @@
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 
-# Create a basic TRAC environment, for the first TRAC
+# Create a basic Trac environment, for the first Trac
 # project on this system.
 #
-# This script also creates a TRAC user named "admin",
+# This script also creates a Trac user named "admin",
 # and requires setting a password for this user.
 # (you should always have at least one valid user,
 # although you can remove this user and replace it
@@ -28,13 +28,13 @@ TRACPROJECT="${2}"
 
 PROJDIR="${TRACDATADIR}/${TRACPROJECT}"
 
-# check whether TRAC is installed in the expected place
+# check whether Trac is installed in the expected place
 #
-# Note: could also check that TRAC is the expected version,
+# Note: could also check that Trac is the expected version,
 # but we don't
 #
 if [ ! -x /usr/local/bin/tracd ]; then
-    echo "ERROR: TRAC did not install"
+    echo "ERROR: Trac is not installed"
     exit 1
 fi
 
@@ -55,7 +55,7 @@ echo "${TRACPROJECT}\n" | trac-admin "${PROJDIR}" initenv
 #
 # Note: this depends on the format of a string that is meant
 # as a comment, and is therefore fragile and might not work
-# for all versions of TRAC.
+# for all versions of Trac.
 #
 sed -e "s/^alt =.*$/alt = $TRACPROJECT/" -i "${PROJDIR}"/conf/trac.ini
 

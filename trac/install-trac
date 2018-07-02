@@ -9,26 +9,26 @@
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 
-# Script for installing a no-frills TRAC, using Sqlite for
+# Script for installing a no-frills Trac, using Sqlite for
 # storage, and using the built-in web server (instead of
 # integrating it into a web server like Apache2).
 #
-# Note that Ubuntu repos already have a TRAC package that
+# Note that Ubuntu repos already have a Trac package that
 # is effortless to install via apt, but I'm not using it
-# because it's a considerably older version of TRAC, and
+# because it's a considerably older version of Trac, and
 # I prefer the newer versions.  YMMV.
 
-# TRACVERSION: the version of TRAC to install
+# TRACVERSION: the version of Trac to install
 # BUILDDIR: scratch directory used for building
 #
 # get the stable release (currently 1.2.2)
 TRACVERSION=1.2.2
 BUILDDIR="/tmp/trac-build-$$"
 
-# Refuse to continue if TRAC is already installed
+# Refuse to continue if Trac is already installed
 #
 if [ -x /usr/local/bin/tracd ]; then
-    echo "ERROR: TRAC is already installed"
+    echo "ERROR: Trac is already installed"
     /usr/local/bin/tracd --version
     exit 1
 fi
@@ -47,7 +47,7 @@ sudo apt install -yf python2.7-dev python2.7-setuptools \
 	python-genshi python-pygments python-tz \
 	apache2-utils git wget
 
-# Now fetch the TRAC software, built it, and install it.
+# Now fetch the Trac software, built it, and install it.
 #
 rm -rf "${BUILDDIR}"
 mkdir -p "${BUILDDIR}"
@@ -68,7 +68,7 @@ rm -rf "${BUILDDIR}"
 # check whether it worked:
 #
 if [ ! -x /usr/local/bin/tracd ]; then
-    echo "ERROR: TRAC did not install"
+    echo "ERROR: Trac did not install"
     exit 1
 fi
 
